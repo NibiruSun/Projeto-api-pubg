@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="ApiPubg.Popups.JogadorPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    BackgroundColor="#525252">
+    <ScrollView>
+
+        <VerticalStackLayout Spacing="10">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label
+                    FontFamily="PoppinsBold"
+                    FontSize="25"
+                    HorizontalOptions="Center"
+                    Text="{Binding NomeJogador}"
+                    TextColor="#D7D6D2"
+                    VerticalOptions="Center" />
+                <Button
+                    Grid.Column="1"
+                    BackgroundColor="Transparent"
+                    Clicked="Button_Clicked"
+                    HorizontalOptions="Center"
+                    ImageSource="voltar.png" />
+            </Grid>
+            <VerticalStackLayout>
+                <Border />
+
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="PoppinsBold"
+                    FontSize="15"
+                    Text="⚔️ Combate"
+                    TextColor="Black" />
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="headshotkills.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding HeadshotKills}"
+                        TextColor="#D7D6D2"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10">
+
+                    <Image Scale="0.8" Source="roadkills.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding RoadKills}"
+                        TextColor="#D7D6D2" VerticalOptions="End" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="killplace.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding KillPlace}"
+                        TextColor="#D7D6D2" VerticalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="killstreaks.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding KillStreaks}"
+                        TextColor="#D7D6D2" VerticalOptions="End"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="teamkills.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding TeamKills}"
+                        TextColor="#D7D6D2" VerticalOptions="End" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="rank.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding Rank}"
+                        TextColor="#D7D6D2" VerticalOptions="End" />
+                </HorizontalStackLayout>
+                <Border />
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="PoppinsBold"
+                    FontSize="15"
+                    HorizontalOptions="Start"
+                    Text="🩺 Sobrevivência"
+                    TextColor="Black" />
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="heals.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding Heals}"
+                        TextColor="#D7D6D2"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="boosts.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding Boosts}"
+                        TextColor="#D7D6D2"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="reviver.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding Revives}"
+                        TextColor="#D7D6D2"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="timesurvived.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding TimeSurvived, StringFormat='{0:N2}'}"
+                        TextColor="#D7D6D2"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="deathtype.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding DeathType}"
+                        TextColor="#D7D6D2"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+                <Border />
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="PoppinsBold"
+                    FontSize="15"
+                    Text="🚗 Movimento"
+                    TextColor="Black" />
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="walkdistance.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding WalkDistance, StringFormat='{0:N2} m'}"
+                        TextColor="#D7D6D2"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="ridedistance.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding RideDistance, StringFormat='{0:N2} m'}"
+                        TextColor="#D7D6D2"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="swidistance.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding SwimDistance, StringFormat='{0:N2} m'}"
+                        TextColor="#D7D6D2"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+                <Border />
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="PoppinsBold"
+                    FontSize="15"
+                    Text="🔫 Outros"
+                    TextColor="Black" />
+
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="vehicledestroy.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding VehicleDestroys}"
+                        TextColor="#D7D6D2"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10">
+                    <Image Scale="0.8" Source="weapons.png" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        Text="{Binding WeaponsAcquired}"
+                        TextColor="#D7D6D2"
+                        VerticalOptions="End" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</toolkit:Popup>

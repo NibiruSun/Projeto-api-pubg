@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ApiPubg.Views.BuscarJogosView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:ApiPubg.Converters"
+    xmlns:model="clr-namespace:ApiPubg.Models"
+    xmlns:modelMatches="clr-namespace:ApiPubg.Models.MatchesModels"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewModel="clr-namespace:ApiPubg.ViewModel"
+    Title="BuscarJogosView"
+    x:DataType="viewModel:ConnectionApiPubg">
+
+    <ContentPage.BindingContext>
+        <viewModel:ConnectionApiPubg />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+
+        <ResourceDictionary>
+            <converters:WonColorConverter x:Key="wonConvertColor" />
+            <converters:IndexToColorConverter x:Key="SquadConvertColor" />
+            <converters:NomeJogadorColorConverter x:Key="nomeConverterColor" />
+            <converters:ValorZeroConverter x:Key="valorZeroConverter" />
+            <converters:ValorZeroDecimalConverter x:Key="valorZeroDecimalConverter" />
+            <converters:PosicaoConverter x:Key="posicaoConverter" />
+            <converters:MapasConverter x:Key="mapasConverter" />
+        </ResourceDictionary>
+
+        <Style x:Key="entryNomeJogador" TargetType="Entry">
+            <Setter Property="MinimumHeightRequest" Value="10" />
+        </Style>
+
+        <Style x:Key="botaoIformacaoJogador" TargetType="Button">
+            <Setter Property="MinimumHeightRequest" Value="10" />
+            <Setter Property="MinimumWidthRequest" Value="10" />
+            <Setter Property="HeightRequest" Value="25" />
+            <Setter Property="WidthRequest" Value="25" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="BackgroundColor" Value="#aea66e" />
+        </Style>
+
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Margin="5" Spacing="2">
+        <Grid ColumnDefinitions="Auto,*">
+            <Button
+                Padding="0"
+                BackgroundColor="Transparent"
+                BorderColor="#000000"
+                ImageSource="battle.png" />
+            <Border
+                Grid.Column="1"
+                Margin="0,0,6,0"
+                Background="AliceBlue"
+                StrokeShape="RoundRectangle 6">
+                <HorizontalStackLayout>
+                    <Entry
+                        FontSize="15"
+                        HeightRequest="40"
+                        Placeholder="Nick do jogador"
+                        Style="{StaticResource entryNomeJogador}"
+                        Text="{Binding NomeJogador.Nome}"
+                        TextColor="#143c88" />
+                    <Button
+                        Grid.Row="1"
+                        Padding="0"
+                        BackgroundColor="Transparent"
+                        BorderColor="#000000"
+                        Command="{Binding PartidasDoPubgCommand}"
+                        ImageSource="search24pred.png"
+                        IsEnabled="{Binding IsEnabledButton}">
+                        <Button.Triggers>
+                            <DataTrigger
+                                Binding="{Binding BtnAnimacao}"
+                                TargetType="Button"
+                                Value="true">
+                                <Setter Property="Scale" Value="{Binding BtnAnimacaoScala}" />
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </HorizontalStackLayout>
+            </Border>
+        </Grid>
+        <Border
+            Margin="5"
+            Padding="5"
+            BackgroundColor="#525252"
+            IsVisible="{Binding IsvisibleNomeResultadoData}"
+            Stroke="{StaticResource Gray100}"
+            StrokeShape="RoundRectangle 6"
+            StrokeThickness="1">
+            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
+                <Grid
+                    Grid.ColumnSpan="2"
+                    ColumnDefinitions="Auto,*"
+                    RowDefinitions="55"
+                    VerticalOptions="Center">
+                    <Label
+                        Margin="5,0,5,0"
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="20"
+                        Text="{Binding NomeJogador.NomeResultData}"
+                        TextColor="#ad6200"
+                        VerticalOptions="Center" />
+                    <Border
+                        Grid.Column="2"
+                        Margin="2"
+                        Stroke="{StaticResource PrimaryDark}"
+                        StrokeShape="RoundRectangle 6"
+                        StrokeThickness="0.5"
+                        VerticalOptions="Center">
+                        <Picker
+                            Title="VER TODAS AS PARTIDAS"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="15"
+                            HorizontalTextAlignment="Center"
+                            ItemDisplayBinding="{Binding DataPartida}"
+                            ItemsSource="{Binding InformacoesDaPartidas}"
+                            SelectedItem="{Binding PickerSelectedItem, Mode=TwoWay}"
+                            TextColor="{StaticResource PrimaryDark}" />
+                    </Border>
+                </Grid>
+                <Grid
+                    Grid.Row="1"
+                    Margin="2,2,0,0"
+                    ColumnDefinitions="Auto,*"
+                    RowDefinitions="Auto,*">
+                    <Label
+                        FontFamily="PoppinsBold"
+                        FontSize="13"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsvisibleBorder}"
+                        Text="JG"
+                        TextColor="{StaticResource PrimaryDark}"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="PoppinsBold"
+                        FontSize="13"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsvisibleBorder}"
+                        Text="{Binding PickerSelectedItem.QuantidadeJogadores}"
+                        TextColor="{StaticResource PrimaryDark}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="1"
+                        FontFamily="PoppinsBold"
+                        FontSize="13"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsvisibleBorder}"
+                        Text="SQ"
+                        TextColor="{StaticResource Gray200}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontFamily="PoppinsBold"
+                        FontSize="13"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsvisibleBorder}"
+                        Text="{Binding SquadJogadores.Count}"
+                        TextColor="{StaticResource Gray200}"
+                        VerticalOptions="Center" />
+                </Grid>
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    BackgroundColor="White"
+                    IsVisible="{Binding IsvisibleBorder}"
+                    Stroke="{StaticResource PrimaryDark}"
+                    StrokeShape="RoundRectangle 6"
+                    StrokeThickness="2"
+                    VerticalOptions="Center">
+                    <Grid
+                        Grid.Row="1"
+                        Margin="5"
+                        ColumnDefinitions="Auto,Auto,Auto"
+                        ColumnSpacing="5"
+                        RowDefinitions="30"
+                        RowSpacing="3">
+                        <HorizontalStackLayout Padding="5" Spacing="5">
+                            <Label
+                                FontFamily="PoppinsBold"
+                                FontSize="10"
+                                Text="Mapa: "
+                                TextColor="#525252"
+                                VerticalOptions="Center" />
+                            <Label
+                                FontFamily="PoppinsBold"
+                                FontSize="12"
+                                Text="{Binding PickerSelectedItem.MapName, Converter={StaticResource mapasConverter}}"
+                                TextColor="#8adf0d"
+                                VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            Grid.Column="1"
+                            Padding="5"
+                            Spacing="5">
+                            <Label
+                                FontFamily="PoppinsBold"
+                                FontSize="10"
+                                Text="Tempo: "
+                                TextColor="#525252"
+                                VerticalOptions="Center" />
+                            <Label
+                                FontFamily="PoppinsBold"
+                                FontSize="12"
+                                Text="{Binding PickerSelectedItem.TempoMinuto, StringFormat='{0:N0}m'}"
+                                TextColor="#debb53"
+                                VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            Grid.Column="2"
+                            Padding="5"
+                            Spacing="5">
+                            <Label
+                                FontFamily="PoppinsBold"
+                                FontSize="10"
+                                Text="Mode: "
+                                TextColor="#525252"
+                                VerticalOptions="Center" />
+                            <Label
+                                FontFamily="PoppinsBold"
+                                FontSize="12"
+                                Text="{Binding PickerSelectedItem.GameMode}"
+                                TextColor="#d76b50"
+                                VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+        <Grid ColumnDefinitions="auto,Auto,Auto,*" IsVisible="{Binding SquadJogadores.Count}">
+            <RadioButton
+                Content="VENCEDOR"
+                FontAttributes="Bold"
+                FontFamily="PoppinsBold"
+                FontSize="12"
+                GroupName="Order"
+                HorizontalOptions="Start"
+                IsChecked="{Binding IsCheckedV}"
+                Scale="0.8"
+                TextColor="{StaticResource Secondary}" />
+            <RadioButton
+                Grid.Column="1"
+                Content="KILL"
+                FontAttributes="Bold"
+                FontFamily="PoppinsBold"
+                FontSize="12"
+                GroupName="Order"
+                IsChecked="{Binding IsCheckedK}"
+                Scale="0.8"
+                TextColor="{StaticResource Secondary}" />
+            <RadioButton
+                Grid.Column="2"
+                Padding="0"
+                Content="DANO"
+                FontAttributes="Bold"
+                FontFamily="PoppinsBold"
+                FontSize="12"
+                GroupName="Order"
+                IsChecked="{Binding IsCheckedD}"
+                Scale="0.8"
+                TextColor="{StaticResource Secondary}" />
+            <Button
+                Grid.Column="4"
+                Padding="0"
+                BackgroundColor="{StaticResource Secondary}"
+                Command="{Binding OdernarSquadRankCommand}"
+                CornerRadius="5"
+                FontAttributes="Bold"
+                FontFamily="PoppinsBold"
+                HeightRequest="25"
+                HorizontalOptions="Center"
+                Style="{StaticResource botaoIformacaoJogador}"
+                Text="Ordernar"
+                TextColor="{StaticResource PrimaryDarkText}"
+                WidthRequest="150" />
+        </Grid>
+        <Border
+            Grid.Row="1"
+            Stroke="{StaticResource Gray500Brush}"
+            StrokeThickness="0.2"
+            VerticalOptions="Start" />
+        <CollectionView
+            HorizontalOptions="Fill"
+            ItemsSource="{Binding SquadJogadores}"
+            ItemsUpdatingScrollMode="KeepScrollOffset"
+            VerticalOptions="Fill">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Horizontal" Span="1" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:SquadJogadores">
+                    <Grid
+                        HorizontalOptions="Fill"
+                        RowDefinitions="Auto,Auto,Auto"
+                        VerticalOptions="Fill">
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            Text="{Binding Posicao, Converter={StaticResource posicaoConverter}}" />
+                        <Border
+                            Grid.Row="1"
+                            Margin="5"
+                            Padding="5"
+                            BackgroundColor="{Binding Ganhou, Converter={StaticResource wonConvertColor}}"
+                            HorizontalOptions="Fill"
+                            StrokeShape="RoundRectangle 4"
+                            VerticalOptions="Fill">
+                            <VerticalStackLayout
+                                Margin="{OnPlatform WinUI=4}"
+                                BindableLayout.ItemsSource="{Binding Jogador}"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Fill">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="model:Jogador">
+                                        <Border
+                                            Grid.Row="1"
+                                            Margin="3"
+                                            Stroke="{Binding index, Converter={StaticResource nomeConverterColor}}"
+                                            StrokeShape="RoundRectangle 4"
+                                            VerticalOptions="Fill">
+                                            <VerticalStackLayout>
+                                                <HorizontalStackLayout>
+                                                    <Border
+                                                        Margin="6,5,6,0"
+                                                        Padding="{OnPlatform Android=2,
+                                                                             WinUI=7}"
+                                                        BackgroundColor="{Binding NomeJogador, Converter={StaticResource nomeConverterColor}}"
+                                                        Stroke="#FFFFFF"
+                                                        StrokeShape="RoundRectangle 4"
+                                                        VerticalOptions="Center"
+                                                        WidthRequest="180">
+                                                        <Grid ColumnDefinitions="20,*,Auto" ColumnSpacing="2">
+                                                            <Border
+                                                                BackgroundColor="{Binding index, Converter={StaticResource SquadConvertColor}}"
+                                                                StrokeShape="RoundRectangle 4"
+                                                                VerticalOptions="Center">
+                                                                <Label
+                                                                    FontFamily="PoppinsBold"
+                                                                    FontSize="10"
+                                                                    HorizontalOptions="Center"
+                                                                    Text="{Binding index}"
+                                                                    VerticalOptions="Center" />
+                                                            </Border>
+                                                            <Label
+                                                                Grid.Column="1"
+                                                                Margin="5,0,0,0"
+                                                                FontFamily="PoppinsBold"
+                                                                FontSize="{OnPlatform Android=10,
+                                                                                      WinUI=12}"
+                                                                Text="{Binding NomeJogador}"
+                                                                TextColor="Black"
+                                                                VerticalOptions="Center" />
+                                                            <Border
+                                                                Grid.Column="2"
+                                                                HeightRequest="25"
+                                                                StrokeShape="RoundRectangle 6"
+                                                                WidthRequest="25">
+                                                                <Button
+                                                                    Padding="0"
+                                                                    BackgroundColor="Transparent"
+                                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PesquisarJogadorSquadCommand}"
+                                                                    CommandParameter="{Binding NomeJogador}"
+                                                                    ImageSource="lupa.png"
+                                                                    Style="{StaticResource botaoIformacaoJogador}" />
+                                                            </Border>
+                                                        </Grid>
+                                                    </Border>
+                                                    <Grid Margin="8" RowDefinitions="*,*">
+                                                        <Label
+                                                            FontFamily="PoppinsBold"
+                                                            FontSize="8"
+                                                            HorizontalOptions="Center"
+                                                            Text="Win"
+                                                            TextColor="#debb53" />
+                                                        <Label
+                                                            Grid.Row="1"
+                                                            FontAttributes="Bold"
+                                                            FontFamily="PoppinsBold"
+                                                            FontSize="12"
+                                                            HorizontalOptions="Center"
+                                                            Text="{Binding WinPlace}"
+                                                            TextColor="{StaticResource PrimaryDark}" />
+                                                    </Grid>
+                                                </HorizontalStackLayout>
+                                                <Grid
+                                                    Margin="0,0,5,0"
+                                                    ColumnDefinitions="Auto,*,*,*"
+                                                    RowDefinitions="Auto, Auto">
+                                                    <VerticalStackLayout Grid.RowSpan="2" Margin="5">
+                                                        <Grid Margin="6,2,0,0" ColumnDefinitions="30,30,30">
+                                                            <Label
+                                                                FontAttributes="Bold"
+                                                                FontFamily="PoppinsBold"
+                                                                FontSize="8"
+                                                                HorizontalOptions="Center"
+                                                                Text="K"
+                                                                TextColor="#D7D6D2" />
+                                                            <Label
+                                                                Grid.Column="1"
+                                                                FontAttributes="Bold"
+                                                                FontFamily="PoppinsBold"
+                                                                FontSize="8"
+                                                                HorizontalOptions="Center"
+                                                                Text="D"
+                                                                TextColor="#D7D6D2" />
+                                                            <Label
+                                                                Grid.Column="2"
+                                                                FontAttributes="Bold"
+                                                                FontFamily="PoppinsBold"
+                                                                FontSize="8"
+                                                                HorizontalOptions="Center"
+                                                                Text="A"
+                                                                TextColor="#D7D6D2" />
+                                                        </Grid>
+                                                        <Border
+                                                            Margin="2"
+                                                            Padding="3"
+                                                            BackgroundColor="#e7e6e4"
+                                                            StrokeShape="RoundRectangle 4">
+                                                            <Grid ColumnDefinitions="30,30,30">
+                                                                <Label
+                                                                    Grid.Row="1"
+                                                                    FontAttributes="Bold"
+                                                                    FontFamily="PoppinsBold"
+                                                                    FontSize="12"
+                                                                    HorizontalOptions="Center"
+                                                                    Text="{Binding Kills, Converter={StaticResource valorZeroConverter}}"
+                                                                    TextColor="#d76b50"
+                                                                    VerticalOptions="End" />
+                                                                <Label
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="1"
+                                                                    FontAttributes="Bold"
+                                                                    FontFamily="PoppinsBold"
+                                                                    FontSize="12"
+                                                                    HorizontalOptions="Center"
+                                                                    Text="{Binding Dbnos, Converter={StaticResource valorZeroConverter}}"
+                                                                    TextColor="#d76b50" />
+                                                                <Label
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="2"
+                                                                    FontAttributes="Bold"
+                                                                    FontFamily="PoppinsBold"
+                                                                    FontSize="12"
+                                                                    HorizontalOptions="Center"
+                                                                    Text="{Binding Assists, Converter={StaticResource valorZeroConverter}}"
+                                                                    TextColor="#d76b50" />
+                                                            </Grid>
+                                                        </Border>
+                                                    </VerticalStackLayout>
+                                                    <Label
+                                                        Grid.Row="1"
+                                                        Grid.Column="1"
+                                                        Margin="8,0,0,20"
+                                                        FontAttributes="Bold"
+                                                        FontFamily="PoppinsBold"
+                                                        FontSize="8"
+                                                        HorizontalOptions="Start"
+                                                        Text="Dano"
+                                                        TextColor="#debb53" />
+                                                    <Label
+                                                        Grid.Row="1"
+                                                        Grid.Column="2"
+                                                        Margin="10,0,0,0"
+                                                        FontFamily="PoppinsBold"
+                                                        FontSize="8"
+                                                        HorizontalOptions="Start"
+                                                        Text="Tiro"
+                                                        TextColor="#8adf0d" />
+                                                    <Label
+                                                        Grid.Row="1"
+                                                        Grid.Column="1"
+                                                        Margin="0,10,0,0"
+                                                        FontAttributes="Bold"
+                                                        FontFamily="PoppinsBold"
+                                                        FontSize="12"
+                                                        HorizontalOptions="Center"
+                                                        Text="{Binding DamageDealt, Converter={StaticResource valorZeroDecimalConverter}}"
+                                                        TextColor="#D7D6D2"
+                                                        VerticalOptions="Center" />
+                                                    <Label
+                                                        Grid.Row="1"
+                                                        Grid.Column="2"
+                                                        Margin="0,10,4,0"
+                                                        FontFamily="PoppinsBold"
+                                                        FontSize="12"
+                                                        HorizontalOptions="Center"
+                                                        Text="{Binding LongestKill, Converter={StaticResource valorZeroDecimalConverter}, StringFormat='{0:N0}m'}"
+                                                        TextColor="#debb53"
+                                                        VerticalOptions="Center" />
+                                                    <Border
+                                                        Grid.Row="1"
+                                                        Grid.Column="3"
+                                                        BackgroundColor="#FFFFFF"
+                                                        HeightRequest="30"
+                                                        Stroke="Black"
+                                                        StrokeThickness="2"
+                                                        WidthRequest="30">
+                                                        <Button
+                                                            Grid.Row="1"
+                                                            Grid.Column="3"
+                                                            Padding="0"
+                                                            BackgroundColor="Transparent"
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DadosJogadorPopupCommand}"
+                                                            CommandParameter="{Binding .}"
+                                                            ImageSource="encontre24p.png"
+                                                            Style="{StaticResource botaoIformacaoJogador}" />
+                                                    </Border>
+                                                </Grid>
+                                            </VerticalStackLayout>
+                                        </Border>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                        </Border>
+                        <Grid Grid.Row="2" ColumnDefinitions="Auto,*">
+                            <HorizontalStackLayout Margin="10,0,20,0" Spacing="20">
+                                <Label
+                                    Margin="10,0,0,0"
+                                    FontAttributes="Bold"
+                                    FontFamily="PoppinsBold"
+                                    FontSize="20"
+                                    Text="{Binding TotalKill, Converter={StaticResource valorZeroConverter}}"
+                                    TextColor="#d76b50" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontFamily="PoppinsBold"
+                                    FontSize="20"
+                                    Text="{Binding TotalDerrubado, Converter={StaticResource valorZeroConverter}}"
+                                    TextColor="#d76b50" />
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontFamily="PoppinsBold"
+                                    FontSize="20"
+                                    Text="{Binding TotalAssist, Converter={StaticResource valorZeroConverter}}"
+                                    TextColor="#d76b50" />
+                            </HorizontalStackLayout>
+                            <Label
+                                Grid.Column="1"
+                                FontAttributes="Bold"
+                                FontFamily="PoppinsBold"
+                                FontSize="20"
+                                HorizontalOptions="Center"
+                                Text="{Binding TotalDano, Converter={StaticResource valorZeroDecimalConverter}, StringFormat='{0:N2}'}"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

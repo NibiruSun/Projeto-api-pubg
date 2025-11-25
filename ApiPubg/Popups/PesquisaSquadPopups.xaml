@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="ApiPubg.Popups.PesquisaSquadPopups"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:ApiPubg.ViewModel"
+    Padding="0"
+    x:DataType="vm:ConnectionApiPubg"
+    BackgroundColor="Transparent"
+    CanBeDismissedByTappingOutsideOfPopup="False">
+    <VerticalStackLayout>
+        <VerticalStackLayout
+            BackgroundColor="Transparent"
+            HorizontalOptions="Fill"
+            Spacing="2"
+            VerticalOptions="Fill">
+            <Border
+                Padding="10,0,5,0"
+                BackgroundColor="#525252"
+                Stroke="{StaticResource SecondaryDarkText}"
+                StrokeShape="RoundRectangle 6">
+                <Label
+                    Margin="5"
+                    FontAttributes="Bold"
+                    FontFamily="PoppinsBlod"
+                    FontSize="15"
+                    HorizontalOptions="Center"
+                    Text="{Binding MsPesquisandoInicio}"
+                    TextColor="{StaticResource Gray100}"
+                    VerticalOptions="Center" />
+            </Border>
+            <Border
+                Margin="0,5,0,0"
+                Stroke="{StaticResource SecondaryDarkText}"
+                StrokeThickness="0.2" />
+            <Grid ColumnDefinitions="*,*" IsVisible="{Binding MsPopupGridIsVisible}">
+                <Label
+                    Margin="10,0,0,0"
+                    FontAttributes="Bold"
+                    FontFamily="PoppinsBold"
+                    HorizontalOptions="Center"
+                    Text="{Binding PickerSelectedItem.QuantidadeJogadores, StringFormat='{0:D} Jogadores'}"
+                    TextColor="{StaticResource PrimaryDark}" />
+                <Label
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontFamily="PoppinsBold"
+                    HorizontalOptions="Center"
+                    Text="{Binding SquadJogadores.Count, StringFormat='{0:D} Squads'}"
+                    TextColor="{StaticResource PrimaryDark}" />
+            </Grid>
+            <Grid
+                ColumnDefinitions="*,Auto"
+                ColumnSpacing="10"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <Label
+                    Margin="10,0,10,0"
+                    FontAttributes="Bold"
+                    FontFamily="PoppinsBold"
+                    FontSize="15"
+                    HorizontalOptions="Center"
+                    Text="{Binding MsInforPartidaCount}"
+                    TextColor="{StaticResource SecondaryDarkText}"
+                    VerticalOptions="Center">
+                    <Label.Triggers>
+                        <DataTrigger
+                            Binding="{Binding MsInforPartidaCount}"
+                            TargetType="Label"
+                            Value="0">
+                            <Setter Property="Text" Value="" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+                <!--<Label
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontFamily="PoppinsBlod"
+                    FontSize="15"
+                    HorizontalOptions="Center"
+                    Text="PARTIDAS"
+                    TextColor="{StaticResource PrimaryDark}"
+                    VerticalOptions="Start" />-->
+                <Grid.Triggers>
+                    <DataTrigger
+                        Binding="{Binding MsInforPartidaCount}"
+                        TargetType="Grid"
+                        Value="0">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </Grid.Triggers>
+            </Grid>
+            <Border Stroke="{StaticResource SecondaryDarkText}" StrokeThickness="0.2" />
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</toolkit:Popup>

@@ -1,29 +1,24 @@
-using ApiPubg.Models.SquadModel;
-using CommunityToolkit.Maui.Extensions;
+using ApiPubg.Models;
+using ApiPubg.ViewModel;
 using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Maui.Extensions;
+using ApiPubg.Models.Painel;
 
 namespace ApiPubg.Popups;
 
-public partial class JogadorPopup : Popup
+public partial class JogadorPopup : Popup<NickPainel>
 {
-
-	public JogadorPopup(Jogador jogador)
+	NickPainel nick;
+	public JogadorPopup()
 	{
 		InitializeComponent();
-		BindingContext = jogador;
-	}
-    //public JogadorPopup()
-    //{
-    //}
+
+		BindingContext = nick = new NickPainel();
+
+    }
 
     private void Button_Clicked(object sender, EventArgs e)
-    {
-		//var popup = new JogadorPopup();
-		var page = Application.Current?.Windows.Count > 0 ? Application.Current.Windows[0].Page : null;
-
-		if (page != null)
-		{
-			page.ClosePopupAsync();
-		}
+	{
+		CloseAsync(nick);
     }
 }

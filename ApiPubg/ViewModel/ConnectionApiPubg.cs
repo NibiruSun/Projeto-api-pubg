@@ -116,7 +116,7 @@ namespace ApiPubg.ViewModel
         public bool Ganhou { get; set; }
         public bool NovoSquad { get; set; } = true;
         private bool JogadorCont { get; set; } = false;
-        private Page Page = null!;
+        //private Page Page = null!;
         int IndexPartida = 0;
 
         private ApiService ApiService;
@@ -134,6 +134,7 @@ namespace ApiPubg.ViewModel
             {
                 await SelecionarPartidaPicher(item!);
             });
+
             ApiService = new();
             Partidas = new List<Matches>();
             NomeJogador = new NomeJogador();
@@ -165,7 +166,7 @@ namespace ApiPubg.ViewModel
         [RelayCommand]
         private async Task DadosJogadorPopup(Jogador jogador)
         {
-            var popup = new JogadorPopup(jogador);
+            var popup = new InforPartidaPopup(jogador);
             var page = Application.Current?.Windows.Count > 0 ? Application.Current.Windows[0].Page : null;
             if (page != null)
             {

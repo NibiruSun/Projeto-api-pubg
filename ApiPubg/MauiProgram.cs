@@ -20,7 +20,7 @@ namespace ApiPubg
 
                 });
             builder.Services.AddSingleton<ConnectionApiPubg>();
-            builder.Services.AddSingleton<HomeViewModel>();
+            builder.Services.AddSingleton<PainelViewModel>();
 
 #if DEBUG
             builder.Logging.AddDebug();

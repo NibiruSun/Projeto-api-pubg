@@ -5,14 +5,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ApiPubg"
     xmlns:view="clr-namespace:ApiPubg.Views"
-    Title="ApiPubg">
+    Title="ApiPubg"
+    Shell.NavBarIsVisible="False">
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
 
         <ShellContent
-            Title="Partidas"
-            ContentTemplate="{DataTemplate view:BuscarJogosView}"
-            Route="MainPage" />
+            Title="Painel"
+            ContentTemplate="{DataTemplate view:Painel}"
+            Route="Painel" />
+
+        <ShellContent Title="Partidas" ContentTemplate="{DataTemplate view:BuscarJogosView}" />
+
+        <ShellContent Title="Telemetria" ContentTemplate="{DataTemplate view:TelemetriaView}" />
 
     </FlyoutItem>
 

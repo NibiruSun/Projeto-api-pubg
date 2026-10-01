@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ApiPubg.Views.Painel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cv="clr-namespace:ApiPubg.Converters"
+    xmlns:model="clr-namespace:ApiPubg.Models.TelemetriaModel"
+    xmlns:modelService="clr-namespace:ApiPubg.Models.ServicesModel"
+    xmlns:modelTelemetry="clr-namespace:ApiPubg.Models.TelemetriaModel"
+    xmlns:vm="clr-namespace:ApiPubg.ViewModel"
+    Title="Home"
+    x:DataType="vm:PainelViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <cv:TelemetryVictimConverter x:Key="TelemetryVictimConverter" />
+
+            <Style x:Key="meubutton" TargetType="Button">
+                <Setter Property="MinimumHeightRequest" Value="10" />
+                <Setter Property="MinimumWidthRequest" Value="10" />
+            </Style>
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
+
+    <Grid
+        Margin="5"
+        Padding="5"
+        RowDefinitions="Auto,Auto,Auto,120,Auto,Auto"
+        RowSpacing="5">
+        <Grid
+            ColumnDefinitions="*,*"
+            RowDefinitions="50, Auto, Auto"
+            RowSpacing="2">
+            <Label
+                FontAttributes="Bold"
+                FontFamily="PoppinsBold"
+                FontSize="25"
+                HorizontalOptions="Center"
+                Text="{Binding NickJogador}"
+                TextColor="Black"
+                VerticalOptions="Center" />
+            <Button
+                Grid.Column="1"
+                Command="{Binding PartidasDoPubgCommand}"
+                Text="Atualizar"
+                VerticalOptions="Center" />
+            <VerticalStackLayout
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                Spacing="10">
+                <Label
+                    FontFamily="PoppinsBold"
+                    FontSize="10"
+                    HorizontalOptions="Center"
+                    Text="INFORMAÇÕES DAS PARTIDAS"
+                    VerticalOptions="Center" />
+                <Grid ColumnDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="5">
+                    <Label
+                        FontFamily="PoppinsBold"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="{Binding DadosJogadorPainel.QtdPartidas}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Column="1"
+                        FontSize="8"
+                        Text="Quantidade"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        Grid.Column="2"
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="15"
+                        HorizontalOptions="Center"
+                        Text="{Binding DadosJogadorPainel.TotalHora, StringFormat='{0:N2}'}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Column="3"
+                        FontSize="8"
+                        Text="Hora"
+                        VerticalOptions="Center" />
+                </Grid>
+            </VerticalStackLayout>
+            <Border
+                Grid.Row="1"
+                Grid.Column="1"
+                Padding="5"
+                Background="#000000"
+                StrokeShape="RoundRectangle 6"
+                VerticalOptions="Start">
+                <ScrollView Orientation="Horizontal">
+                    <Grid
+                        ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                        ColumnSpacing="30"
+                        RowDefinitions="Auto, Auto">
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            Text="1°" />
+                        <Label
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            Text="2°" />
+                        <Label
+                            Grid.Column="2"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            Text="3°" />
+                        <Label
+                            Grid.Column="3"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            Text="4°" />
+                        <Label
+                            Grid.Column="4"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            Text="5°" />
+                        <Label
+                            Grid.Column="5"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            Text="6°" />
+                        <Label
+                            Grid.Column="6"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            Text="7°" />
+                        <Label
+                            Grid.Column="7"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            Text="8°" />
+                        <Label
+                            Grid.Column="8"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            Text="9°" />
+                        <Label
+                            Grid.Column="9"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            Text="10°" />
+                        <Label
+                            Grid.Row="1"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding DadosJogadorPainel.Primeiro}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding DadosJogadorPainel.Segundo}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding DadosJogadorPainel.Terceiro}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="3"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding DadosJogadorPainel.Quarto}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="4"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="{Binding DadosJogadorPainel.Quinto}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="5"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="15"
+                            HorizontalOptions="Center"
+                            Text="{Binding DadosJogadorPainel.Sexto}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="6"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="15"
+                            HorizontalOptions="Center"
+                            Text="{Binding DadosJogadorPainel.Setimo}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="7"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="15"
+                            HorizontalOptions="Center"
+                            Text="{Binding DadosJogadorPainel.Oitavo}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="8"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="15"
+                            HorizontalOptions="Center"
+                            Text="{Binding DadosJogadorPainel.Nono}" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="9"
+                            FontAttributes="Bold"
+                            FontFamily="PoppinsBold"
+                            FontSize="15"
+                            HorizontalOptions="Center"
+                            Text="{Binding DadosJogadorPainel.Decimo}" />
+                    </Grid>
+                </ScrollView>
+            </Border>
+        </Grid>
+        <!--<Border Grid.Row="1" />-->
+        <Grid
+            Grid.Row="1"
+            Margin="0,-5,0,0"
+            ColumnDefinitions="*,*"
+            ColumnSpacing="5">
+            <Grid
+                ColumnDefinitions="*,*,*"
+                ColumnSpacing="3"
+                HorizontalOptions="Center"
+                RowDefinitions="Auto,Auto">
+                <Label
+                    FontFamily="PoppinsBold"
+                    FontSize="10"
+                    HorizontalOptions="Center"
+                    Text="K" />
+                <Label
+                    Grid.Column="1"
+                    FontFamily="PoppinsBold"
+                    FontSize="10"
+                    HorizontalOptions="Center"
+                    Text="D" />
+                <Label
+                    Grid.Column="2"
+                    FontFamily="PoppinsBold"
+                    FontSize="10"
+                    HorizontalOptions="Center"
+                    Text="A" />
+                <RoundRectangle
+                    Grid.Row="1"
+                    BackgroundColor="Beige"
+                    CornerRadius="6"
+                    HeightRequest="35"
+                    Stroke="{OnPlatform Android='#FFFFFF',
+                                        Default='#000000'}"
+                    VerticalOptions="Center"
+                    WidthRequest="50" />
+                <!--<Border Grid.Row="1" StrokeShape="RoundRectangle 6">-->
+                <Label
+                    Grid.Row="1"
+                    FontFamily="PoppinsBold"
+                    HorizontalOptions="Center"
+                    Text="{Binding DadosJogadorPainel.kills}"
+                    TextColor="#000000"
+                    VerticalOptions="Center" />
+                <!--</Border>-->
+                <RoundRectangle
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    BackgroundColor="Beige"
+                    CornerRadius="6"
+                    HeightRequest="35"
+                    Stroke="{OnPlatform Android='#FFFFFF',
+                                        Default='#000000'}"
+                    VerticalOptions="Center"
+                    WidthRequest="50" />
+                <!--<Border
+                Grid.Row="1"
+                Grid.Column="1"
+                StrokeShape="RoundRectangle 6">-->
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    FontFamily="PoppinsBold"
+                    HorizontalOptions="Center"
+                    Text="{Binding DadosJogadorPainel.Dbnos}"
+                    TextColor="#000000"
+                    VerticalOptions="Center" />
+                <!--</Border>-->
+                <RoundRectangle
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    BackgroundColor="Beige"
+                    CornerRadius="6"
+                    HeightRequest="35"
+                    Stroke="{OnPlatform Android='#FFFFFF',
+                                        Default='#000000'}"
+                    VerticalOptions="Center"
+                    WidthRequest="50" />
+
+                <!--<Border
+                Grid.Row="1"
+                Grid.Column="2"
+                StrokeShape="RoundRectangle 6">-->
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    FontFamily="PoppinsBold"
+                    HorizontalOptions="Center"
+                    Text="{Binding DadosJogadorPainel.Asssits}"
+                    TextColor="#000000"
+                    VerticalOptions="Center" />
+            </Grid>
+            <!--</Border>-->
+            <Grid
+                Grid.Column="1"
+                ColumnDefinitions="*,*"
+                RowDefinitions="Auto,Auto">
+                <Label
+                    FontFamily="PoppinsBold"
+                    FontSize="10"
+                    HorizontalOptions="Center"
+                    Text="Dano" />
+                <Label
+                    Grid.Column="1"
+                    FontFamily="PoppinsBold"
+                    FontSize="10"
+                    HorizontalOptions="Center"
+                    Text="Tiro" />
+                <Label
+                    Grid.Row="1"
+                    FontFamily="PoppinsBold"
+                    HorizontalOptions="Center"
+                    Text="{Binding DadosJogadorPainel.DamageDealt, StringFormat='{0:N2}'}" />
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontFamily="PoppinsBold"
+                    HorizontalOptions="Center"
+                    Text="{Binding DadosJogadorPainel.LongestKill, StringFormat='{0:N2} m'}" />
+            </Grid>
+        </Grid>
+        <RoundRectangle
+            Grid.Row="2"
+            Margin="0,10,0,0"
+            BackgroundColor="#666666"
+            CornerRadius="6"
+            Stroke="Beige"
+            StrokeThickness="0.5">
+            <RoundRectangle.Triggers>
+                <DataTrigger
+                    Binding="{Binding DadosJogador.Count}"
+                    TargetType="RoundRectangle"
+                    Value="0">
+                    <Setter Property="HeightRequest" Value="90" />
+                </DataTrigger>
+            </RoundRectangle.Triggers>
+        </RoundRectangle>
+        <Grid Grid.Row="2" RowDefinitions="Auto, Auto">
+            <Grid
+                Margin="0,20,0,0"
+                ColumnDefinitions="Auto,Auto,*"
+                RowDefinitions="15,Auto">
+                <RadioButton
+                    Content="Todas"
+                    FontSize="10"
+                    GroupName="Pesquisa"
+                    HorizontalOptions="Center"
+                    IsChecked="{Binding ValorRadioDataT, Mode=TwoWay}"
+                    Scale="0.8" />
+                <RadioButton
+                    Grid.Column="1"
+                    Content="Data"
+                    FontSize="10"
+                    GroupName="Pesquisa"
+                    HorizontalOptions="Start"
+                    IsChecked="{Binding ValorRadioDataD, Mode=TwoWay}"
+                    Scale="0.8" />
+                <DatePicker
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Date="{Binding SelectedData}"
+                    HorizontalOptions="Center">
+                    <DatePicker.Triggers>
+                        <DataTrigger
+                            Binding="{Binding ValorRadioDataD}"
+                            TargetType="DatePicker"
+                            Value="False">
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Setter Property="TextColor" Value="#1A1A1A" />
+                        </DataTrigger>
+                    </DatePicker.Triggers>
+                </DatePicker>
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Padding="5"
+                    Command="{Binding PesquisarDataCommand}"
+                    FontSize="10"
+                    HeightRequest="25"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource meubutton}"
+                    Text="Pesquisar">
+                    <Button.Triggers>
+                        <DataTrigger
+                            Binding="{Binding IsEnabledButtom}"
+                            TargetType="Button"
+                            Value="False">
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Setter Property="BackgroundColor" Value="#666666" />
+                        </DataTrigger>
+
+                    </Button.Triggers>
+                </Button>
+            </Grid>
+            <!--<RoundRectangle
+                Grid.Row="1"
+                Margin="5,0,5,5"
+                CornerRadius="6"
+                IsVisible="{Binding DadosJogador.Count}"
+                Stroke="{OnPlatform Android='#FFFFFF',
+                                    Default='#000000'}" BackgroundColor="Gray" />-->
+            <CollectionView
+                Grid.Row="1"
+                Margin="5"
+                ItemsSource="{Binding DadosJogador}"
+                SelectedItem="{Binding IdDadosJogador, Mode=TwoWay}"
+                SelectionChangedCommand="{Binding GetTelemetryCommand}"
+                SelectionMode="Single">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="modelService:DadosJogadorModel">
+                        <Border
+                            Margin="0,0,5,0"
+                            Stroke="Beige"
+                            StrokeShape="RoundRectangle 10,0,0,10"
+                            StrokeThickness="0.2">
+                            <Grid
+                                Padding="5"
+                                RowDefinitions="25, Auto"
+                                VerticalOptions="Center">
+                                <RoundRectangle
+                                    Margin="0,0,0,0"
+                                    BackgroundColor="Beige"
+                                    CornerRadius="6"
+                                    Stroke="#000000" />
+                                <Grid
+                                    Padding="5"
+                                    ColumnDefinitions="*,*,*"
+                                    WidthRequest="230">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="10"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding Data}"
+                                        TextColor="#000000" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontSize="10"
+                                        Text="{Binding Hora}"
+                                        TextColor="#000000" />
+                                    <Label
+                                        Grid.Column="2"
+                                        FontAttributes="Bold"
+                                        FontSize="10"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding WinPlace}"
+                                        TextColor="#000000" />
+                                </Grid>
+                                <!--<RoundRectangle CornerRadius="6" Stroke="{OnPlatform Android='#FFFFFF', Default='#000000'}" Grid.Row="1" Margin="5,0,0,0"/>-->
+                                <!--<Border
+                            Grid.Row="1"
+                            Margin="2"
+                            Padding="5"
+                            StrokeShape="RoundRectangle 6">-->
+                                <Grid
+                                    Grid.Row="1"
+                                    ColumnDefinitions="*,*,*,*,*"
+                                    ColumnSpacing="5"
+                                    RowDefinitions="*,*">
+                                    <Label
+                                        Grid.Column="3"
+                                        FontFamily="PoppinsBold"
+                                        FontSize="10"
+                                        HorizontalOptions="Center"
+                                        Text="Dano"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Grid.Column="4"
+                                        FontFamily="PoppinsBold"
+                                        FontSize="10"
+                                        HorizontalOptions="Center"
+                                        Text="Tiro" />
+                                    <Grid />
+                                    <Label
+                                        FontFamily="PoppinsBold"
+                                        FontSize="10"
+                                        HorizontalOptions="Center"
+                                        Text="K" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="PoppinsBold"
+                                        FontSize="10"
+                                        HorizontalOptions="Center"
+                                        Text="D" />
+                                    <Label
+                                        Grid.Column="2"
+                                        FontFamily="PoppinsBold"
+                                        FontSize="10"
+                                        HorizontalOptions="Center"
+                                        Text="A" />
+                                    <!--<Border Grid.Row="1" StrokeShape="RoundRectangle 6">-->
+                                    <RoundRectangle
+                                        Grid.Row="1"
+                                        BackgroundColor="#FFFFFF"
+                                        CornerRadius="6"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Center"
+                                        Stroke="#000000"
+                                        StrokeThickness="0.5"
+                                        VerticalOptions="Center"
+                                        WidthRequest="35" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontFamily="PoppinsBold"
+                                        FontSize="12"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding Kills}"
+                                        TextColor="#bca6ab"
+                                        VerticalOptions="Center" />
+                                    <!--</Border>-->
+                                    <RoundRectangle
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        BackgroundColor="#FFFFFF"
+                                        CornerRadius="6"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Center"
+                                        Stroke="#000000"
+                                        StrokeThickness="0.5"
+                                        VerticalOptions="Center"
+                                        WidthRequest="35" />
+                                    <!--<Border
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                StrokeShape="RoundRectangle 6">-->
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        FontFamily="PoppinsBold"
+                                        FontSize="12"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding Dbnos}"
+                                        TextColor="#bca6ab"
+                                        VerticalOptions="Center" />
+                                    <!--</Border>-->
+                                    <RoundRectangle
+                                        Grid.Row="1"
+                                        Grid.Column="2"
+                                        BackgroundColor="#FFFFFF"
+                                        CornerRadius="6"
+                                        HeightRequest="35"
+                                        HorizontalOptions="Center"
+                                        Stroke="#000000"
+                                        StrokeThickness="0.5"
+                                        VerticalOptions="Center"
+                                        WidthRequest="35" />
+                                    <!--<Border
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                StrokeShape="RoundRectangle 6">-->
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="2"
+                                        FontFamily="PoppinsBold"
+                                        FontSize="12"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding Assists}"
+                                        TextColor="#bca6ab"
+                                        VerticalOptions="Center" />
+                                    <!--</Border>-->
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="3"
+                                        FontFamily="PoppinsBold"
+                                        FontSize="9"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding DamageDealt, StringFormat='{0:N2}'}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="4"
+                                        Margin="0,0,5,0"
+                                        FontAttributes="Bold"
+                                        FontFamily="PoppinsBold"
+                                        FontSize="9"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding LongestKill, StringFormat='{0:N2} m'}"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                                <!--</Border>-->
+                            </Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="#707070" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="LightBlue" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        <HorizontalStackLayout
+            Grid.Row="3"
+            HorizontalOptions="Center"
+            Spacing="10">
+            <Grid HorizontalOptions="Center" RowDefinitions="Auto, 30, Auto, Auto, Auto, Auto">
+                <Grid.Triggers>
+                    <DataTrigger
+                        Binding="{Binding DerrubouVictimModel.Name, Converter={StaticResource TelemetryVictimConverter}}"
+                        TargetType="Grid"
+                        Value="True">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <Label
+                    FontFamily="PoppinsBold"
+                    HorizontalOptions="Center"
+                    Text="DERRUBOU" />
+                <RoundRectangle
+                    Grid.Row="1"
+                    CornerRadius="6"
+                    Stroke="{OnPlatform Android='#FFFFFF',
+                                        Default='#000000'}" />
+                <Label
+                    Grid.Row="1"
+                    FontFamily="PoppinsBold"
+                    FontSize="12"
+                    HorizontalOptions="Center"
+                    Text="{Binding DerrubouVictimModel.Name}"
+                    VerticalOptions="Center" />
+                <HorizontalStackLayout Grid.Row="2" Spacing="2">
+                    <Label FontSize="10" Text="Vida: " />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="10"
+                        Text="{Binding DerrubouVictimModel.Health}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Row="3" Spacing="2">
+                    <Label FontSize="10" Text="Distancia do tiro: " />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="10"
+                        Text="{Binding DerrubouVictimModel.Distance, StringFormat='{0:N2}.m'}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Row="4" Spacing="2">
+                    <Label FontSize="10" Text="Arma: " />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="10"
+                        Text="{Binding DerrubouVictimModel.DamageCauserName}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Row="5" Spacing="2">
+                    <Label FontSize="10" Text="Tipo de dano: " />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="10"
+                        Text="{Binding DerrubouVictimModel.DamageReason}" />
+                </HorizontalStackLayout>
+                <!--<Label Grid.Row="5" Text="{Binding DerrubouModel.DamageTypeCategory}" />-->
+            </Grid>
+            <Grid HorizontalOptions="Center" RowDefinitions="Auto, 30, Auto, Auto, Auto, Auto">
+                <Grid.Triggers>
+                    <DataTrigger
+                        Binding="{Binding FinalizouVictimModel.Name, Converter={StaticResource TelemetryVictimConverter}}"
+                        TargetType="Grid"
+                        Value="True">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </Grid.Triggers>
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="PoppinsBold"
+                    HorizontalOptions="Center"
+                    Text="FINALIZOU" />
+                <RoundRectangle
+                    Grid.Row="1"
+                    CornerRadius="6"
+                    Stroke="{OnPlatform Android='#FFFFFF',
+                                        Default='#000000'}" />
+                <Label
+                    Grid.Row="1"
+                    FontFamily="PoppinsBold"
+                    FontSize="12"
+                    HorizontalOptions="Center"
+                    Text="{Binding FinalizouVictimModel.Name}"
+                    VerticalOptions="Center" />
+                <HorizontalStackLayout Grid.Row="2" Spacing="2">
+                    <Label FontSize="10" Text="Vida: " />
+                    <Label
+                        FontFamily="PoppinsBold"
+                        FontSize="10"
+                        Text="{Binding FinalizouVictimModel.Health}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Row="3" Spacing="2">
+                    <Label FontSize="10" Text="Distância do tiro: " />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="10"
+                        Text="{Binding FinalizouVictimModel.Distance, StringFormat='{0:N2}.m'}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Row="4" Spacing="2">
+                    <Label FontSize="10" Text="Arma: " />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="10"
+                        Text="{Binding FinalizouVictimModel.DamageCauserName}" />
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Grid.Row="5" Spacing="2">
+                    <Label FontSize="10" Text="Tipo de dano: " />
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="PoppinsBold"
+                        FontSize="10"
+                        Text="{Binding FinalizouVictimModel.DamageReason}" />
+                </HorizontalStackLayout>
+
+            </Grid>
+        </HorizontalStackLayout>
+        <Grid Grid.Row="4" ColumnDefinitions="*,*">
+            <CollectionView HeightRequest="300" ItemsSource="{Binding FinalizouModelCollection}">
+                <CollectionView.Header>
+                    <Label
+                        FontFamily="PoppinsBold"
+                        HorizontalOptions="Center"
+                        Text="JOGADORES FINALIZADOS" />
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="modelTelemetry:FinalizouModel">
+                        <VerticalStackLayout Spacing="5">
+                            <Label FontFamily="PoppinsBold" Text="{Binding Name}" />
+                            <Label Text="{Binding Health, StringFormat='{0:} : Vida'}" />
+                            <Label Text="{Binding Distance, StringFormat='{0:N2}.m'}" />
+                            <Label Text="{Binding DamageCauserName}" />
+                            <Label Text="{Binding DamageReason}" />
+                            <Border />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <CollectionView
+                Grid.Column="1"
+                HeightRequest="300"
+                ItemsSource="{Binding DerrubouModelCollection}">
+                <CollectionView.Header>
+                    <Label
+                        FontFamily="PoppinsBold"
+                        HorizontalOptions="Center"
+                        Text="JOGADORES DERRUBADOS" />
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="modelTelemetry:DerrubouModel">
+                        <VerticalStackLayout Spacing="5">
+                            <Label FontFamily="PoppinsBold" Text="{Binding Name}" />
+                            <Label Text="{Binding Health, StringFormat='{0:} : Vida'}" />
+                            <Label Text="{Binding Distance, StringFormat='{0:N2}.m'}" />
+                            <Label Text="{Binding DamageCauserName}" />
+                            <Label Text="{Binding DamageReason}" />
+                            <Border />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+        <Button
+            Grid.Row="5"
+            Margin="5"
+            Command="{Binding ExcluirDadosCommand}"
+            Text="Excluir para teste do app" />
+
+    </Grid>
+</ContentPage>
